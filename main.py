@@ -247,13 +247,12 @@ async def search_by_image_base64(image_base64: str = Body(...)):
 
 HISTORICAL_COLLECTION_ID = "423c89fc-9137-41c5-ae1d-4b27055c152a"
 
-
 @app.post("/historical-by-image")
 async def search_by_image_historical(image_file: UploadFile = File(...)):
     try:
         image_path = save_uploaded_image(image_file, f"{os.urandom(8).hex()}.{image_file.content_type.lower().split('/')[-1]}")
         
-        search_object = SearchRequest([image_path], min_score=0.3, search_mode=SearchMode.FAST, collection_ids=HISTORICAL_COLLECTION_ID)
+        search_object = SearchRequest([image_path], min_score=0.3, search_mode=SearchMode.FAST, collection_id = HISTORICAL_COLLECTION_ID)
         results = sdk.search.search(search_object)
         
         if not results:
@@ -276,7 +275,7 @@ async def search_by_image_base64_historical(image_base64: str = Body(...)):
     try:
         image_path = save_base64_image(image_base64, f"{os.urandom(8).hex()}.jpg")
         
-        search_object = SearchRequest([image_path], min_score=0.3, search_mode=SearchMode.FAST, collection_ids=HISTORICAL_COLLECTION_ID)
+        search_object = SearchRequest([image_path], min_score=0.3, search_mode=SearchMode.FAST, collection_id = HISTORICAL_COLLECTION_ID)
         results = sdk.search.search(search_object)
         
         if not results:
