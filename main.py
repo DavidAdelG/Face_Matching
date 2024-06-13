@@ -79,7 +79,7 @@ def list_person():
         persons = str(sdk.persons.list())
         return persons
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 @app.post("/add-person")
 async def add_person(person_name: str = Form(...), image_file: UploadFile = File(...)):
@@ -104,7 +104,7 @@ async def add_person(person_name: str = Form(...), image_file: UploadFile = File
             "ID": my_person.id
         }
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 @app.post("/add-personBase64")
 async def add_person_base64(person_name: str = Form(...), image_base64: str = Body(...)):
@@ -129,7 +129,7 @@ async def add_person_base64(person_name: str = Form(...), image_base64: str = Bo
             "ID": my_person.id
         }
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 @app.post("/face-matching")
 async def face_matching(person_id: str = Form(...), image_file: UploadFile = File(...)):
@@ -158,7 +158,7 @@ async def face_matching(person_id: str = Form(...), image_file: UploadFile = Fil
             "score": "{:.2f}%".format(results.score * 100)
         }
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 @app.post("/face-matchingBase64")
 async def face_matching_base64(person_id: str = Form(...), image_base64: str = Body(...)):
@@ -187,7 +187,7 @@ async def face_matching_base64(person_id: str = Form(...), image_base64: str = B
             "score": "{:.2f}%".format(results.score * 100)
         }
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 @app.post("/search-by-image")
 async def search_by_image(image_file: UploadFile = File(...)):
@@ -206,7 +206,7 @@ async def search_by_image(image_file: UploadFile = File(...)):
             "score": "{:.2f}%".format(results[0].score * 100)
         }
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 @app.post("/search-by-imageBase64")
 async def search_by_image_base64(image_base64: str = Body(...)):
@@ -225,7 +225,7 @@ async def search_by_image_base64(image_base64: str = Body(...)):
             "score": "{:.2f}%".format(results[0].score * 100)
         }
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 HISTORICAL_COLLECTION_ID = "423c89fc-9137-41c5-ae1d-4b27055c152a"
 CONFIDENCE_THRESHOLD = 0.3
@@ -250,7 +250,7 @@ async def search_by_image_historical(image_file: UploadFile = File(...)):
         "3rd_score": "{:.2f}%".format(results[2].score * 100)
         }
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 @app.post("/historical-by-image-base64")
 async def search_by_image_base64_historical(image_base64: str = Body(...)):
@@ -272,7 +272,7 @@ async def search_by_image_base64_historical(image_base64: str = Body(...)):
         "3rd_score": "{:.2f}%".format(results[2].score * 100)
         }
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 @app.post("/search-by-id")
 def search_by_id(person_id: str = Form(...)):
@@ -287,7 +287,7 @@ def search_by_id(person_id: str = Form(...)):
             "isReserved": search_results.collections
         }
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 @app.post("/reserve-person")
 def reserve(person_id: str = Form(...)):
@@ -302,7 +302,7 @@ def reserve(person_id: str = Form(...)):
             "isReserved": sdk.collections.get("1f11ea6b-05d2-458b-846e-73df744efb64").name
         }
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
 
 @app.delete("/delete-person")
 def delete_person(person_id: str = Form(...)):
@@ -310,5 +310,5 @@ def delete_person(person_id: str = Form(...)):
         sdk.persons.delete(person_id)
         return {"message": "Person deleted successfully."}
     except Exception as e:
-        return {"Error Message": str(e)}
+        return {"ErrorMessage": str(e)}
     
