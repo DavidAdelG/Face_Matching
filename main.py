@@ -103,7 +103,7 @@ async def add_person(person_name: str = Form(...), image_file: UploadFile = File
         
         if results:
             return {
-                "message": "Person already exists",
+                "message": "FaceID obtained Successfully",
                 "ID": results[0].person.id,
                 "Name": results[0].person.name,
             }
@@ -129,7 +129,7 @@ async def add_person_base64(person_name: str = Form(...), image_base64: str = Bo
         
         if results:
             return {
-                "message": "Person already exists",
+                "message": "FaceID obtained Successfully",
                 "ID": results[0].person.id,
                 "Name": results[0].person.name,
             }
