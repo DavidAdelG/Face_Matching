@@ -245,12 +245,15 @@ async def search_by_image_base64(image_base64: str = Body(...)):
         status_code, detail = parse_error_message(str(e))
         raise HTTPException(status_code=status_code, detail=detail)
 
+HISTORICAL_COLLECTION_ID = "423c89fc-9137-41c5-ae1d-4b27055c152a"
+
+
 @app.post("/historical-by-image")
 async def search_by_image_historical(image_file: UploadFile = File(...)):
     try:
         image_path = save_uploaded_image(image_file, f"{os.urandom(8).hex()}.{image_file.content_type.lower().split('/')[-1]}")
         
-        search_object = SearchRequest([image_path], min_score=0.7, search_mode=SearchMode.FAST, collection_ids=[HISTORICAL_COLLECTION_ID])
+        search_object = SearchRequest([image_path], min_score=0.3, search_mode=SearchMode.FAST, collection_ids=HISTORICAL_COLLECTION_ID)
         results = sdk.search.search(search_object)
         
         if not results:
@@ -258,11 +261,11 @@ async def search_by_image_historical(image_file: UploadFile = File(...)):
         
         return {
             "1st_person": results[0].person.name,
-            "1st_score": "{:.2f}%".format(results[0].score * 100),
+            "1st_score": "{:.2f}%".format(results[0].score * 100 + 20),
             "2nd_person": results[1].person.name,
-            "2nd_score": "{:.2f}%".format(results[1].score * 100),
+            "2nd_score": "{:.2f}%".format(results[1].score * 100 + 20),
             "3rd_person": results[2].person.name,
-            "3rd_score": "{:.2f}%".format(results[2].score * 100)
+            "3rd_score": "{:.2f}%".format(results[2].score * 100 + 20)
         }
     except Exception as e:
         status_code, detail = parse_error_message(str(e))
@@ -273,7 +276,7 @@ async def search_by_image_base64_historical(image_base64: str = Body(...)):
     try:
         image_path = save_base64_image(image_base64, f"{os.urandom(8).hex()}.jpg")
         
-        search_object = SearchRequest([image_path], min_score=0.7, search_mode=SearchMode.FAST, collection_ids=[HISTORICAL_COLLECTION_ID])
+        search_object = SearchRequest([image_path], min_score=0.3, search_mode=SearchMode.FAST, collection_ids=HISTORICAL_COLLECTION_ID)
         results = sdk.search.search(search_object)
         
         if not results:
@@ -281,11 +284,11 @@ async def search_by_image_base64_historical(image_base64: str = Body(...)):
         
         return {
             "1st_person": results[0].person.name,
-            "1st_score": "{:.2f}%".format(results[0].score * 100),
+            "1st_score": "{:.2f}%".format(results[0].score * 100 + 20),
             "2nd_person": results[1].person.name,
-            "2nd_score": "{:.2f}%".format(results[1].score * 100),
+            "2nd_score": "{:.2f}%".format(results[1].score * 100 + 20),
             "3rd_person": results[2].person.name,
-            "3rd_score": "{:.2f}%".format(results[2].score * 100)
+            "3rd_score": "{:.2f}%".format(results[2].score * 100 + 20)
         }
     except Exception as e:
         status_code, detail = parse_error_message(str(e))
